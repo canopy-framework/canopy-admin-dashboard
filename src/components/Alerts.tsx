@@ -58,7 +58,6 @@ const Alerts: React.FC = () => {
             <div key={`${name}:${checked}`}>
               <label>
                 <input
-                  className="unchecked"
                   type="checkbox"
                   id={name}
                   checked={checked}
