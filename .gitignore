@@ -3,7 +3,6 @@ dist-ssr
 *.local
 .vscode
 
-
 # dependencies
 /node_modules
 /.pnp
