@@ -34,7 +34,7 @@ function App() {
 }
 
 const Layout = () => {
-  const style = ({ isActive }) => ({
+  const style = ({ isActive }: { isActive: boolean }) => ({
     fontWeight: isActive ? 'bold' : 'normal'
   });
 
