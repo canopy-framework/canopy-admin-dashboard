@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router } from 'express';
 import 'dotenv/config';
-import axios from "axios";
+import axios from 'axios';
 
 const GRAFANA_PORT = parseInt(process.env.GRAFANA_PORT || '');
 const USERNAME = process.env.GRAFANA_USERNAME || '';
@@ -24,8 +24,8 @@ router.get('/stats', async (req, res) => {
   let results;
   try {
     results = await Promise.all([statsPromise, usagePromise]);
-  } catch(error) {
-    console.error("Error fetching grafana stats");
+  } catch (error) {
+    console.error('Error fetching grafana stats');
     res.status(500).send(`Error fetching grafana stats: ${error}`);
   }
 
@@ -35,31 +35,33 @@ router.get('/stats', async (req, res) => {
   const data = stats.data;
   const uData = usage.data;
   const info = {
-    "general": {},
-    "totals": {},
-    "users": {},
-    "activity": {},
+    general: {},
+    totals: {},
+    users: {},
+    activity: {}
   };
   try {
-    info["general"]["status"] = "Ok."
-    info["general"]["Grafana version"] = uData["version"]
-    info["general"]["uptime (seconds)"] = (uData["metrics"]["stats.uptime"]);
-  
-    const date = new Date(parseInt(uData["metrics"]["stats.database.created.time"], 10) * 1000)
-    info["general"]["creation date"] = (date.toLocaleDateString());
-    info["totals"]["dashboards"] = (data.dashboards);
-    info["totals"]["datasources"] = (data.datasources);
-    info["totals"]["alerts"] = (data.alerts);
-    info["users"]["users"] = (data.users);
-    info["users"]["admins"] = (data.admins);
-    info["users"]["editors"] = (data.editors);
-    info["users"]["viewers"] = (data.viewers);
-    info["activity"]["active users"] = data.activeUsers;
-    info["activity"]["active sessions"] = data.activeSessions;
-    info["activity"]["daily active users"] = data.dailyActiveUsers;
-    info["activity"]["monthly active users"] = data.monthlyActiveUsers;
-  } catch(err) {
-    return res.status(500).json({error: ("error fetching grafana info" + err)})
+    info['general']['status'] = 'Ok.';
+    info['general']['Grafana version'] = uData['version'];
+    info['general']['uptime (seconds)'] = uData['metrics']['stats.uptime'];
+
+    const date = new Date(
+      parseInt(uData['metrics']['stats.database.created.time'], 10) * 1000
+    );
+    info['general']['creation date'] = date.toLocaleDateString();
+    info['totals']['dashboards'] = data.dashboards;
+    info['totals']['datasources'] = data.datasources;
+    info['totals']['alerts'] = data.alerts;
+    info['users']['users'] = data.users;
+    info['users']['admins'] = data.admins;
+    info['users']['editors'] = data.editors;
+    info['users']['viewers'] = data.viewers;
+    info['activity']['active users'] = data.activeUsers;
+    info['activity']['active sessions'] = data.activeSessions;
+    info['activity']['daily active users'] = data.dailyActiveUsers;
+    info['activity']['monthly active users'] = data.monthlyActiveUsers;
+  } catch (err) {
+    return res.status(500).json({ error: 'error fetching grafana info' + err });
   }
 
   return res.status(200).send(info);

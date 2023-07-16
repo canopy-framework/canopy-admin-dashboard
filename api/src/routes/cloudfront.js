@@ -23,7 +23,6 @@ router.get('/info', (req, res) => {
   } catch(err) {
     return res.status(500).send(err);
   }
-  console.log("firing info", info);
   return res.status(200).json(info);
 })
 

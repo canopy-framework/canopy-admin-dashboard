@@ -1,12 +1,13 @@
 import { getStats } from 'services/grafana';
 import { getClickhouseStats } from 'services/clickhouse';
 import { getCloudfrontInfo } from 'services/cloudfront';
+import { ClickhouseStats, GrafanaStats, CloudfrontInfo } from 'types/stats';
 import { useState, useEffect } from 'react';
 
 const Monitor: React.FC = () => {
-  const [cloudfrontInfo, setCloudfrontInfo] = useState({});
-  const [grafanaStats, setGrafanaStats] = useState({});
-  const [clickhouseStats, setClickhouseStats] = useState({});
+  const [cloudfrontInfo, setCloudfrontInfo] = useState<CloudfrontInfo>({});
+  const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
+  const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
   useEffect(() => {
     getStats().then((res) => {
       setGrafanaStats(res);
@@ -19,11 +20,13 @@ const Monitor: React.FC = () => {
     });
   }, []);
 
-  const grafanaInfoData = (category: string) => {
+  type Category = 'general' | 'totals' | 'users' | 'activity';
+
+  const grafanaInfoData = (category: Category) => {
     const keys = Object.keys(grafanaStats);
-    console.log('grafana stats', grafanaStats);
     if (keys.length > 0) {
-      return Object.keys(grafanaStats[category]).map((field) => {
+      const keys = Object.keys(grafanaStats);
+      return keys.map((field) => {
         return (
           <li key={field}>
             {field}: {grafanaStats[category][field]}
@@ -76,8 +79,25 @@ const Monitor: React.FC = () => {
               <ul>{cloudfrontInfoData()}</ul>
             </div>
             <div>
-              <button className="block">Open Grafana Dashboard</button>
-              <button className="block">Set up Alerts</button>
+              <div>
+                <a
+                  href={`http://${import.meta.env.VITE_SERVER_HOST}:${
+                    import.meta.env.VITE_GRAFANA_PORT
+                  }`}
+                >
+                  <img
+                    className="mr-3 inline-block h-8 w-8"
+                    src="Grafana_icon.png"
+                    alt="Grafana icon"
+                  />
+                  <p className="inline-block">Open Grafana</p>
+                </a>
+              </div>
+              <div>
+                <a className="block" href="/monitor/alerts">
+                  Set up Alerts
+                </a>
+              </div>
             </div>
           </div>
         </div>
