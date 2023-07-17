@@ -67,43 +67,32 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   };
 
   return (
-    <div className="ml-60 min-h-screen bg-gray-100 pl-10 pt-24">
-      <h1 className="text-4xl">Configure</h1>
-      <div className="mr-5 min-h-full border-2 border-solid border-black pl-3 pr-5 pt-8">
-        <h2 className="text-xl"> Create / Destroy Pipeline</h2>
-        <div className="h-60 border-2 border-solid border-black bg-white">
-          <div id="cloudfront_info" className="flex gap-5 pl-5">
+    <div>
+      <h1>Configure</h1>
+      <div>
+        <h2> Create / Destroy Pipeline</h2>
+        <div>
+          <div id="cloudfront_info">
             <div>
-              <h3 className="text-lg font-bold">Summary</h3>
+              <h3>Summary</h3>
               <ul>{cloudfrontInfoData()}</ul>
             </div>
           </div>
-          <div id="deploy_destroy" className="flex gap-5 pl-5">
+          <div id="deploy_destroy">
             <div>
-              <h3 className="text-lg font-bold">Actions</h3>
-              <input
-                className="block"
-                type="submit"
-                value="Deploy"
-                onClick={handleDeploy}
-              />
-              <input
-                className="block"
-                type="submit"
-                value="Destroy"
-                onClick={handleDestroy}
-              />
+              <h3>Actions</h3>
+              <input type="submit" value="Deploy" onClick={handleDeploy} />
+              <input type="submit" value="Destroy" onClick={handleDestroy} />
             </div>
           </div>
         </div>
-        <h2 className="mt-5 text-xl">Configure</h2>
-        <div className="h-full border-2 border-solid border-black bg-white">
-          <form className="block" onSubmit={handleSubmitConfigureForm}>
-            <fieldset className="pb-5">
-              <label className="ml-4 block pt-3">
+        <h2>Configure</h2>
+        <div>
+          <form onSubmit={handleSubmitConfigureForm}>
+            <fieldset>
+              <label>
                 AWS account number:
                 <input
-                  className="block border-2 border-black"
                   type="text"
                   value={accountNumber}
                   onChange={(
@@ -113,10 +102,9 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                   }}
                 />
               </label>
-              <label className="ml-4 block pt-3">
+              <label>
                 CloudFront Distribution ID:
                 <input
-                  className="block border-2 border-black"
                   type="text"
                   value={distributionId}
                   onChange={(
@@ -126,10 +114,9 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                   }}
                 />
               </label>
-              <label className="ml-4 block pt-3">
+              <label>
                 HTTP endpoint (URI)
                 <input
-                  className="block border-2 border-black"
                   type="text"
                   value={httpEndpoint}
                   onChange={(
@@ -139,10 +126,9 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                   }}
                 />
               </label>
-              <label className="ml-4 block pt-3">
+              <label>
                 AWS secret access key
                 <input
-                  className="block border-2 border-black"
                   type="text"
                   value={secretKey}
                   onChange={(
@@ -152,10 +138,9 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                   }}
                 />
               </label>
-              <label className="ml-4 block pt-3">
+              <label>
                 AWS region
                 <input
-                  className="block border-2 border-black"
                   type="text"
                   value={region}
                   onChange={(

@@ -94,11 +94,11 @@ const Alerts: React.FC = () => {
     }
   };
   return (
-    <div className="ml-60 min-h-screen bg-gray-100 pl-10 pt-24">
-      <h1 className="text-4xl">Alerts</h1>
-      <div className="mr-5 min-h-full border-2 border-solid border-black pl-3 pr-5 pt-8">
-        <h2 className="text-xl">Add Quick Alerts</h2>
-        <div className="h-60 border-2 border-solid border-black bg-white">
+    <div>
+      <h1>Alerts</h1>
+      <div>
+        <h2>Add Quick Alerts</h2>
+        <div>
           <div id="alert_listing">
             <form onSubmit={handleSubmitAlertForm}>
               <fieldset id="quick_alert_form">
@@ -108,10 +108,8 @@ const Alerts: React.FC = () => {
             </form>
           </div>
         </div>
-        <h2 className="mt-5 text-xl">Active Alerts</h2>
-        <div className="h-60 border-2 border-solid border-black bg-white">
-          {activeQuickAlertsList()}
-        </div>
+        <h2>Active Alerts</h2>
+        <div>{activeQuickAlertsList()}</div>
       </div>
     </div>
   );

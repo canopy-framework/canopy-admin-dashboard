@@ -1,6 +1,9 @@
 import { createRoot } from 'react-dom/client';
-// import 'tailwindcss/tailwind.css';
 import App from 'components/App';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const container = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(container);
