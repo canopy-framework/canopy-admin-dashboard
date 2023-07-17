@@ -13,6 +13,9 @@ app.use('/cloudfront', routes.cloudfront);
 app.use('/grafana', routes.grafana);
 app.use('/clickhouse', routes.clickhouse);
 app.use('/alert', routes.alert);
+app.use('/configure', routes.configure);
+app.use('/deploy', routes.deploy);
+app.use('/destroy', routes.destroy);
 
 app.listen(PORT, () => {
   console.log('Temp Admin Dashboard Server listening on port ' + PORT);

@@ -4,6 +4,9 @@ import Home from './Home';
 import Alerts from './Alerts';
 import '../index.css';
 import UserSettings from './UserSettings';
+import { useState, useEffect } from 'react';
+import { CloudfrontInfo } from 'types/stats';
+import { getCloudfrontInfo } from 'services/cloudfront';
 
 import {
   BrowserRouter as Router,
@@ -14,15 +17,28 @@ import {
 } from 'react-router-dom';
 
 function App() {
+  const [cloudfrontInfo, setCloudfrontInfo] = useState<CloudfrontInfo>({});
+  useEffect(() => {
+    getCloudfrontInfo().then((res) => {
+      setCloudfrontInfo(res);
+    });
+  }, []);
+
   return (
     <Router>
       <div id="App" className="block">
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/home" element={<Configure />} />
-            <Route path="/configure" element={<Configure />} />
-            <Route path="/monitor" element={<Monitor />} />
+            <Route path="/home" element={<Home />} />
+            <Route
+              path="/configure"
+              element={<Configure cloudfrontInfo={cloudfrontInfo} />}
+            />
+            <Route
+              path="/monitor"
+              element={<Monitor cloudfrontInfo={cloudfrontInfo} />}
+            />
             <Route path="/user_settings" element={<UserSettings />} />
             <Route path="/Alerts" element={<Alerts />} />
             <Route path="*" element={<NoMatch />} />
