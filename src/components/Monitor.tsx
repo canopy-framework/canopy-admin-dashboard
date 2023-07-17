@@ -1,11 +1,11 @@
 import { getStats } from 'services/grafana';
 import { getClickhouseStats } from 'services/clickhouse';
-import { getCloudfrontInfo } from 'services/cloudfront';
 import { ClickhouseStats, GrafanaStats, CloudfrontInfo } from 'types/stats';
 import { useState, useEffect } from 'react';
 
-const Monitor: React.FC = () => {
-  const [cloudfrontInfo, setCloudfrontInfo] = useState<CloudfrontInfo>({});
+const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
+  cloudfrontInfo
+}) => {
   const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
   const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
   useEffect(() => {
@@ -14,9 +14,6 @@ const Monitor: React.FC = () => {
     });
     getClickhouseStats().then((res) => {
       setClickhouseStats(res);
-    });
-    getCloudfrontInfo().then((res) => {
-      setCloudfrontInfo(res);
     });
   }, []);
 
