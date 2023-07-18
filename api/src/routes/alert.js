@@ -77,19 +77,23 @@ router.get('/all', async (_, res) => {
 
 router.post('/', (req, res) => {
   const alertsToConfigure = req.body.data;
-  exec(
-    `echo 'This will eventually fire the provision alert command with data: ${alertsToConfigure}`,
-    (error, stdout, stderr) => {
-      if (error) {
-        console.log('error: ', error);
-      }
-      if (stderr) {
-        console.log('stderr: ', stderr);
-      }
-      // res.send(stderr);
-      console.log('stdout: ', stdout);
+  const alertsAsCLIOptions = alertsToConfigure
+    .map((alertName) => {
+      const match = alertName.match(/\d+$/g)[0];
+      return '-' + match;
+    })
+    .join(' ');
+
+  exec(`canopy alert ${alertsAsCLIOptions}`, (error, stdout, stderr) => {
+    if (error) {
+      console.log('error: ', error);
     }
-  );
+    if (stderr) {
+      console.log('stderr: ', stderr);
+    }
+    // res.send(stderr);
+    console.log('stdout: ', stdout);
+  });
   console.log('configuring alert');
   // Mock response data
   // canopy alert [alertsToConfigure]
