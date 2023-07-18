@@ -17,6 +17,7 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   const [httpEndpoint, setHttpEndpoint] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [region, setRegion] = useState<string>('');
+  const [accessKeyId, setAccessKeyId] = useState<string>('');
 
   const cloudfrontInfoData = () => {
     const keys = Object.keys(cloudfrontInfo);
@@ -46,7 +47,8 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
           distributionId,
           httpEndpoint,
           secretKey,
-          region
+          region,
+          accessKeyId
         );
       } catch (error) {
         console.error('Failed to update AWS configuration ' + error);
@@ -199,6 +201,21 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                 event: React.ChangeEvent & { target: HTMLInputElement }
               ) => {
                 setSecretKey(event.target.value);
+              }}
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              label="AWS Access Key ID"
+              name="AWS Access Key ID"
+              variant="outlined"
+              color={'primary'}
+              fullWidth
+              required
+              value={accessKeyId}
+              onChange={(
+                event: React.ChangeEvent & { target: HTMLInputElement }
+              ) => {
+                setAccessKeyId(event.target.value);
               }}
               sx={{ mt: 2 }}
             />

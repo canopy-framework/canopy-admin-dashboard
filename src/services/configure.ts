@@ -7,7 +7,8 @@ export const updateConfiguration = async (
   distributionId: string,
   httpEndpoint: string,
   secretKey: string,
-  region: string
+  region: string,
+  accessKeyId: string
 ) => {
   await axios.post(`${BASEURL}/setAWSInfo`, {
     data: {
@@ -16,6 +17,7 @@ export const updateConfiguration = async (
       httpEndpoint,
       secretKey,
       region,
+      accessKeyId,
       deployed: false
     }
   });
