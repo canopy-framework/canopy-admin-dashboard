@@ -20,18 +20,3 @@ export const updateConfiguration = async (
     }
   });
 };
-
-/*
-{
-  accountNumber: string,
-  distributions: [
-    {
-      distributionId: string,
-      httpEndpoint: string,
-      secretKey: string,
-      region: string,
-
-    }
-  ]
-}
-*/

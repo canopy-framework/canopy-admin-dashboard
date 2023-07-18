@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Divider from '@mui/material/Divider';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -9,35 +8,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
-import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
-import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
-import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
-import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
-const categories = [
-  {
-    id: 'Build',
-    children: [
-      { id: 'Monitor', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Configure', icon: <PublicIcon /> },
-      { id: 'Alerts', icon: <SettingsEthernetIcon /> },
-      {
-        id: 'User',
-        icon: <PeopleIcon />,
-        active: true
-      }
-    ]
-  }
-];
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 
 const item = {
-  py: '2px',
+  py: '25px',
   px: 3,
   color: 'rgba(255, 255, 255, 0.7)',
   '&:hover, &:focus': {
@@ -47,9 +24,29 @@ const item = {
 
 const itemCategory = {
   boxShadow: '0 -1px 0 rgb(255,255,255,0.1) inset',
-  py: 1.5,
+  py: 5,
   px: 3
 };
+
+const homeItemCategory = {
+  boxShadow: '0 -1px 0 rgb(255,255,255,0.1) inset',
+  py: 2.5,
+  px: 3
+};
+
+const categories = [
+  {
+    children: [
+      { id: 'Monitor', icon: <QueryStatsIcon /> },
+      { id: 'Configure', icon: <SettingsIcon /> },
+      { id: 'Alerts', icon: <NotificationsIcon /> },
+      {
+        id: 'User',
+        icon: <PeopleIcon />
+      }
+    ]
+  }
+];
 
 export default function Navigator(props: DrawerProps) {
   const { ...other } = props;
@@ -60,23 +57,31 @@ export default function Navigator(props: DrawerProps) {
         <ListItem
           sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}
         >
-          <img src="canopy_logo.png" style={{ height: 40, width: 40 }} />
-          Canopy
+          <img src="blue_sam.png" style={{ height: 100, width: 100 }} />
         </ListItem>
-        <ListItem sx={{ ...item, ...itemCategory }}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>Home</ListItemText>
-        </ListItem>
+        <Link to={'/home'} style={{ textDecoration: 'none', color: 'white' }}>
+          <ListItem sx={{ ...item, ...homeItemCategory }}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText>Home</ListItemText>
+          </ListItem>
+        </Link>
         {categories.map(({ id, children }) => (
-          <Box key={id} sx={{ bgcolor: '#101F33' }}>
+          <Box key={1} sx={{ bgcolor: '#101F33' }}>
             <ListItem sx={{ py: 2, px: 3 }}>
               <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
             </ListItem>
             {children.map(({ id: childId, icon, active }) => (
               <ListItem disablePadding key={childId}>
-                <Link to={`/${childId}`}>
+                <Link
+                  to={`/${childId}`}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'white',
+                    width: '100%'
+                  }}
+                >
                   <ListItemButton selected={active} sx={item}>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>

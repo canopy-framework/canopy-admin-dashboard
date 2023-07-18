@@ -1,2 +1,8 @@
 {
+  "accountNumber": "dd",
+  "distributionId": "sdfsd",
+  "httpEndpoint": "https://www.rrr.com/",
+  "secretKey": "asddf",
+  "region": "us-east-1",
+  "deployed": false
 }
