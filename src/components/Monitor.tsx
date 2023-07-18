@@ -18,7 +18,11 @@ const GRAFANA_URL = `http://${import.meta.env.VITE_SERVER_HOST}:${
   import.meta.env.VITE_GRAFANA_PORT
 }`;
 
-export function ClickhouseAccordion({ clickhouseStats }) {
+export function ClickhouseAccordion({
+  clickhouseStats
+}: {
+  clickhouseStats: ClickhouseStats;
+}) {
   const clickHouseInfoData = () => {
     const keys = Object.keys(clickhouseStats);
     if (keys.length > 0) {
@@ -55,7 +59,11 @@ export function ClickhouseAccordion({ clickhouseStats }) {
   );
 }
 
-export function GrafanaAccordion({ grafanaStats }) {
+export function GrafanaAccordion({
+  grafanaStats
+}: {
+  grafanaStats: GrafanaStats;
+}) {
   const grafanaInfoData = (category: Category) => {
     console.log(grafanaStats);
     const dataCheck = Object.keys(grafanaStats);
