@@ -3,10 +3,15 @@ import { updateConfiguration } from 'services/configure';
 import { useEffect, useState } from 'react';
 import { deploy } from 'services/deploy';
 import { destroy } from 'services/destroy';
+import Paper from '@mui/material/Paper';
+import { TextField } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   cloudfrontInfo
 }) => {
+  const theme = useTheme();
   const [accountNumber, setAccountNumber] = useState<string>('');
   const [distributionId, setDistributionId] = useState<string>('');
   const [httpEndpoint, setHttpEndpoint] = useState<string>('');
@@ -68,92 +73,159 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
 
   return (
     <div>
-      <h1>Configure</h1>
       <div>
         <h2> Create / Destroy Pipeline</h2>
-        <div>
-          <div id="cloudfront_info">
-            <div>
-              <h3>Summary</h3>
-              <ul>{cloudfrontInfoData()}</ul>
+        <Paper
+          sx={{
+            maxWidth: 936,
+            height: '100%',
+            margin: 'none',
+            overflow: 'hidden'
+          }}
+        >
+          <div>
+            <div id="cloudfront_info">
+              <div>
+                <h3>Canopy pipeline</h3>
+                <ul>{cloudfrontInfoData()}</ul>
+              </div>
+            </div>
+            <div id="deploy_destroy">
+              <div>
+                <h3>Actions</h3>
+                <ul>
+                  <li>
+                    <p style={{ display: 'inline-block', textAlign: 'center' }}>
+                      Deploy Canopy pipeline:{' '}
+                    </p>
+                    <Button
+                      type="submit"
+                      onClick={handleDeploy}
+                      value="Deploy"
+                      variant="contained"
+                      style={{ display: 'inline-block', textAlign: 'center' }}
+                    >
+                      Deploy
+                    </Button>
+                  </li>
+                  <li>
+                    <p style={{ display: 'inline-block', textAlign: 'center' }}>
+                      Destroy Canopy pipeline:{' '}
+                    </p>
+                    <Button
+                      type="submit"
+                      onClick={handleDestroy}
+                      value="Deploy"
+                      variant="contained"
+                      style={{ display: 'inline-block', textAlign: 'center' }}
+                    >
+                      Destroy
+                    </Button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div id="deploy_destroy">
-            <div>
-              <h3>Actions</h3>
-              <input type="submit" value="Deploy" onClick={handleDeploy} />
-              <input type="submit" value="Destroy" onClick={handleDestroy} />
-            </div>
-          </div>
-        </div>
-        <h2>Configure</h2>
-        <div>
-          <form onSubmit={handleSubmitConfigureForm}>
-            <fieldset>
-              <label>
-                AWS account number:
-                <input
-                  type="text"
-                  value={accountNumber}
-                  onChange={(
-                    event: React.ChangeEvent & { target: HTMLInputElement }
-                  ) => {
-                    setAccountNumber(event.target.value);
-                  }}
-                />
-              </label>
-              <label>
-                CloudFront Distribution ID:
-                <input
-                  type="text"
-                  value={distributionId}
-                  onChange={(
-                    event: React.ChangeEvent & { target: HTMLInputElement }
-                  ) => {
-                    setDistributionId(event.target.value);
-                  }}
-                />
-              </label>
-              <label>
-                HTTP endpoint (URI)
-                <input
-                  type="text"
-                  value={httpEndpoint}
-                  onChange={(
-                    event: React.ChangeEvent & { target: HTMLInputElement }
-                  ) => {
-                    setHttpEndpoint(event.target.value);
-                  }}
-                />
-              </label>
-              <label>
-                AWS secret access key
-                <input
-                  type="text"
-                  value={secretKey}
-                  onChange={(
-                    event: React.ChangeEvent & { target: HTMLInputElement }
-                  ) => {
-                    setSecretKey(event.target.value);
-                  }}
-                />
-              </label>
-              <label>
-                AWS region
-                <input
-                  type="text"
-                  value={region}
-                  onChange={(
-                    event: React.ChangeEvent & { target: HTMLInputElement }
-                  ) => {
-                    setRegion(event.target.value);
-                  }}
-                />
-              </label>
-              <button type="submit">Submit</button>
-            </fieldset>
+        </Paper>
+        <h2>Configure Pipeline</h2>
+        <Paper
+          sx={{
+            maxWidth: 936,
+            height: '100%',
+            margin: 'none',
+            overflow: 'hidden'
+          }}
+        >
+          <form
+            noValidate
+            autoComplete="off"
+            style={{ padding: '10px' }}
+            onSubmit={handleSubmitConfigureForm}
+          >
+            <TextField
+              label="AWS account number:"
+              name="AWS account number"
+              variant="outlined"
+              color={'primary'}
+              fullWidth
+              required
+              value={accountNumber}
+              onChange={(
+                event: React.ChangeEvent & { target: HTMLInputElement }
+              ) => {
+                setAccountNumber(event.target.value);
+              }}
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              label="CloudFront Distribution ID:"
+              name="CloudFront Distribution ID"
+              variant="outlined"
+              color={'primary'}
+              fullWidth
+              required
+              value={distributionId}
+              onChange={(
+                event: React.ChangeEvent & { target: HTMLInputElement }
+              ) => {
+                setDistributionId(event.target.value);
+              }}
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              label="HTTP Endpoint (URI)"
+              name="HTTP Endpoint (URI)"
+              variant="outlined"
+              color={'primary'}
+              fullWidth
+              required
+              value={httpEndpoint}
+              onChange={(
+                event: React.ChangeEvent & { target: HTMLInputElement }
+              ) => {
+                setHttpEndpoint(event.target.value);
+              }}
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              label="AWS Secret Access Key"
+              name="AWS Secret Access Key"
+              variant="outlined"
+              color={'primary'}
+              fullWidth
+              required
+              value={secretKey}
+              onChange={(
+                event: React.ChangeEvent & { target: HTMLInputElement }
+              ) => {
+                setSecretKey(event.target.value);
+              }}
+              sx={{ mt: 2 }}
+            />
+            <TextField
+              label="AWS Region"
+              name="AWS Region"
+              variant="outlined"
+              color={'primary'}
+              fullWidth
+              required
+              value={region}
+              onChange={(
+                event: React.ChangeEvent & { target: HTMLInputElement }
+              ) => {
+                setRegion(event.target.value);
+              }}
+              sx={{ mt: 2 }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              style={{ display: 'inline-block', textAlign: 'center' }}
+            >
+              submit
+            </Button>
           </form>
-        </div>
+        </Paper>
       </div>
     </div>
   );

@@ -2,38 +2,23 @@ import { getStats } from 'services/grafana';
 import { getClickhouseStats } from 'services/clickhouse';
 import { ClickhouseStats, GrafanaStats, CloudfrontInfo } from 'types/stats';
 import { useState, useEffect } from 'react';
+import Paper from '@mui/material/Paper';
 
-const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
-  cloudfrontInfo
-}) => {
-  const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
-  const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
-  useEffect(() => {
-    getStats().then((res) => {
-      setGrafanaStats(res);
-    });
-    getClickhouseStats().then((res) => {
-      setClickhouseStats(res);
-    });
-  }, []);
+import * as React from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
 
-  type Category = 'general' | 'totals' | 'users' | 'activity';
+type Category = 'general' | 'totals' | 'users' | 'activity';
 
-  const grafanaInfoData = (category: Category) => {
-    const keys = Object.keys(grafanaStats);
-    if (keys.length > 0) {
-      const keys = Object.keys(grafanaStats);
-      return keys.map((field) => {
-        return (
-          <li key={field}>
-            {field}: {grafanaStats[category][field]}
-          </li>
-        );
-      });
-    } else {
-      return 'no data from Grafana';
-    }
-  };
+const GRAFANA_URL = `http://${import.meta.env.VITE_SERVER_HOST}:${
+  import.meta.env.VITE_GRAFANA_PORT
+}`;
+
+export function ClickhouseAccordion({ clickhouseStats }) {
   const clickHouseInfoData = () => {
     const keys = Object.keys(clickhouseStats);
     if (keys.length > 0) {
@@ -48,6 +33,128 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
       return 'no data from ClickHouse';
     }
   };
+  return (
+    <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>overview</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div id="clickhouse_stats">
+            <div>
+              <ul>{clickHouseInfoData()}</ul>
+            </div>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+}
+
+export function GrafanaAccordion({ grafanaStats }) {
+  const grafanaInfoData = (category: Category) => {
+    console.log(grafanaStats);
+    const dataCheck = Object.keys(grafanaStats);
+    if (dataCheck.length > 0) {
+      const keys = Object.keys(grafanaStats[category]);
+      return keys.map((field) => {
+        return (
+          <li key={field}>
+            {field}: {grafanaStats[category][field]}
+          </li>
+        );
+      });
+    } else {
+      return 'no data from Grafana';
+    }
+  };
+  return (
+    <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>overview</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div id="grafana_general">
+            <div>
+              <ul>{grafanaInfoData('general')}</ul>
+            </div>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>totals</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div id="grafana_general">
+            <div>
+              <ul>{grafanaInfoData('totals')}</ul>
+            </div>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>users</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div id="grafana_general">
+            <div>
+              <ul>{grafanaInfoData('users')}</ul>
+            </div>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>activity</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div id="grafana_general">
+            <div>
+              <ul>{grafanaInfoData('activity')}</ul>
+            </div>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+}
+const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
+  cloudfrontInfo
+}) => {
+  const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
+  const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
+
+  useEffect(() => {
+    getStats().then((res) => {
+      setGrafanaStats(res);
+    });
+    getClickhouseStats().then((res) => {
+      setClickhouseStats(res);
+    });
+  }, []);
 
   const cloudfrontInfoData = () => {
     const keys = Object.keys(cloudfrontInfo);
@@ -64,64 +171,75 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
 
   return (
     <div>
-      <h1>Monitor</h1>
       <div>
         <h2> CloudFront CDN</h2>
-        <div>
-          <h2>CloudFront CDN</h2>
-          <p>Distribution Name</p>
-          <div id="cloudfront_info">
-            <div>
-              <h3>Summary</h3>
-              <ul>{cloudfrontInfoData()}</ul>
-            </div>
-            <div>
-              <div>
-                <a
-                  href={`http://${import.meta.env.VITE_SERVER_HOST}:${
-                    import.meta.env.VITE_GRAFANA_PORT
-                  }`}
+        <Paper
+          sx={{
+            maxWidth: 936,
+            height: '100%',
+            margin: 'none',
+            overflow: 'hidden'
+          }}
+        >
+          <div>
+            <div id="cloudfront_info">
+              <div style={{ display: 'block' }}>
+                <h3>Summary</h3>
+                <ul style={{ display: 'inline-block' }}>
+                  {cloudfrontInfoData()}
+                </ul>
+                <Button
+                  variant="contained"
+                  href={GRAFANA_URL}
+                  style={{ display: 'inline-block', textAlign: 'center' }}
                 >
-                  <img src="Grafana_icon.png" alt="Grafana icon" />
-                  <p>Open Grafana</p>
-                </a>
+                  <img
+                    src="Grafana_icon.png"
+                    alt="Grafana icon"
+                    style={{
+                      height: '25px',
+                      width: '25px',
+                      marginBottom: '-6px',
+                      display: 'inline-block'
+                    }}
+                  />
+                  <Typography
+                    variant="body1"
+                    style={{
+                      height: '25px',
+                      width: '100px',
+                      display: 'inline-block',
+                      marginLeft: '8px'
+                    }}
+                  >
+                    Open Grafana
+                  </Typography>
+                </Button>
               </div>
               <div>
-                <a href="/monitor/alerts">Set up Alerts</a>
+                <div style={{ display: 'inline-block' }}></div>
               </div>
             </div>
           </div>
-        </div>
+        </Paper>
         <h2> System Information</h2>
-        <div>
-          <h2>System Information</h2>
-          <h3>ClickHouse Database</h3>
-          <div id="clickhouse_stats">
-            <div>
-              <h3>Summary</h3>
-              <ul>{clickHouseInfoData()}</ul>
-            </div>
+        <Paper
+          sx={{
+            maxWidth: 936,
+            height: '100%',
+            margin: 'none',
+            overflow: 'hidden'
+          }}
+        >
+          <div>
+            <h3>ClickHouse Database</h3>
+            <ClickhouseAccordion
+              clickhouseStats={clickhouseStats}
+            ></ClickhouseAccordion>
+            <h3>Grafana</h3>
+            <GrafanaAccordion grafanaStats={grafanaStats}></GrafanaAccordion>
           </div>
-          <h3>Grafana</h3>
-          <div id="grafana_stats">
-            <div>
-              <h3>Summary</h3>
-              <ul>{grafanaInfoData('general')}</ul>
-            </div>
-            <div>
-              <h3>-</h3>
-              <ul>{grafanaInfoData('totals')}</ul>
-            </div>
-            <div>
-              <h3>Users</h3>
-              <ul>{grafanaInfoData('users')}</ul>
-            </div>
-            <div>
-              <h3>Activity</h3>
-              <ul>{grafanaInfoData('activity')}</ul>
-            </div>
-          </div>
-        </div>
+        </Paper>
       </div>
     </div>
   );

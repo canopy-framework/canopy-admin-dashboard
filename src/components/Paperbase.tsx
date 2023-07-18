@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Navigator from './Navigator';
+import Header from './Header';
+import Content from './Content';
 
 import { getCloudfrontInfo } from 'services/cloudfront';
 import { CloudfrontInfo } from 'types/stats';
@@ -22,10 +24,10 @@ import {
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
+      {'Copyright © Canopy '}
+      {/* <Link color="inherit" href="https://mui.com/">
+        
+      </Link>{' '} */}
       {new Date().getFullYear()}.
     </Typography>
   );
@@ -215,9 +217,8 @@ export default function Paperbase() {
           {/* <Header onDrawerToggle={handleDrawerToggle} /> */}
           <Box
             component="main"
-            sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+            sx={{ flex: 1, py: 1, px: 4, bgcolor: '#eaeff1' }}
           >
-            {/* <Content /> */}
             <Outlet />
           </Box>
           <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>

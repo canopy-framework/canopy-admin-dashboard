@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getQuickAlerts, alert } from 'services/alert';
 import { Alerts as AlertsStateObj, AlertNamesArray } from 'types/alert';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 const Alerts: React.FC = () => {
   const [quickAlerts, setQuickAlerts] = useState<AlertsStateObj>({});
@@ -95,22 +97,37 @@ const Alerts: React.FC = () => {
   };
   return (
     <div>
-      <h1>Alerts</h1>
-      <div>
-        <h2>Add Quick Alerts</h2>
+      <h2>Quick Alerts</h2>
+      <Paper
+        sx={{
+          maxWidth: 936,
+          height: '100%',
+          margin: 'none',
+          overflow: 'hidden'
+        }}
+      >
         <div>
-          <div id="alert_listing">
-            <form onSubmit={handleSubmitAlertForm}>
-              <fieldset id="quick_alert_form">
-                {quickAlertsList()}
-                <input type="submit" value="Configure Alerts" />
-              </fieldset>
-            </form>
+          <h2>Add Quick Alerts</h2>
+          <div>
+            <div id="alert_listing">
+              <form onSubmit={handleSubmitAlertForm}>
+                <fieldset id="quick_alert_form" style={{ border: 'none' }}>
+                  {quickAlertsList()}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    style={{ display: 'inline-block', textAlign: 'center' }}
+                  >
+                    Configure Alerts
+                  </Button>
+                </fieldset>
+              </form>
+            </div>
           </div>
+          <h2>Active Alerts</h2>
+          <div>{activeQuickAlertsList()}</div>
         </div>
-        <h2>Active Alerts</h2>
-        <div>{activeQuickAlertsList()}</div>
-      </div>
+      </Paper>
     </div>
   );
 };
