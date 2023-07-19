@@ -186,7 +186,8 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             maxWidth: 936,
             height: '100%',
             margin: 'none',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            padding: '10px'
           }}
         >
           <div>
@@ -236,7 +237,8 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             maxWidth: 936,
             height: '100%',
             margin: 'none',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            padding: '10px'
           }}
         >
           <div>

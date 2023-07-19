@@ -82,7 +82,8 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             maxWidth: 936,
             height: '100%',
             margin: 'none',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            padding: '20px'
           }}
         >
           <div>
@@ -135,7 +136,8 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             maxWidth: 936,
             height: '100%',
             margin: 'none',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            padding: 2
           }}
         >
           <form
