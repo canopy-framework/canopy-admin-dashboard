@@ -26,7 +26,7 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
       return keys.map((field) => {
         return (
           <li key={field}>
-            {field}: {cloudfrontInfo[field]}
+            <strong>{field.toUpperCase()}</strong>: {cloudfrontInfo[field]}
           </li>
         );
       });
@@ -89,8 +89,8 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
           <div>
             <div id="cloudfront_info">
               <div>
-                <h3>Canopy pipeline</h3>
-                <ul>{cloudfrontInfoData()}</ul>
+                <h3>Canopy Pipeline</h3>
+                <ul style={{ listStyleType: 'none' }}>{cloudfrontInfoData()}</ul>
               </div>
             </div>
             <div id="deploy_destroy">
