@@ -201,7 +201,7 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                   variant="contained"
                   href={GRAFANA_URL}
                   target="_blank"
-                  style={{ display: 'inline-block', textAlign: 'center' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', float: 'right', right: '20%', height: '80px', width: '200px' }}
                 >
                   <img
                     src="Grafana_icon.png"
