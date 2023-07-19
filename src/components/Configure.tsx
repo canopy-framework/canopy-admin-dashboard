@@ -239,9 +239,9 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             <Button
               type="submit"
               variant="contained"
-              style={{ display: 'inline-block', textAlign: 'center' }}
+              style={{ display: 'inline-block', textAlign: 'center', margin: '10px' }}
             >
-              submit
+              Submit
             </Button>
           </form>
         </Paper>
