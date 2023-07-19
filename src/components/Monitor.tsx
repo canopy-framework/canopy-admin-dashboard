@@ -29,7 +29,7 @@ export function ClickhouseAccordion({
       return keys.map((field) => {
         return (
           <li key={field}>
-            {field}: {clickhouseStats[field]}
+            <strong>{field.toUpperCase()}</strong>: {clickhouseStats[field]}
           </li>
         );
       });
@@ -50,7 +50,7 @@ export function ClickhouseAccordion({
         <AccordionDetails>
           <div id="clickhouse_stats">
             <div>
-              <ul>{clickHouseInfoData()}</ul>
+              <ul style={{ listStyleType: 'none' }}>{clickHouseInfoData()}</ul>
             </div>
           </div>
         </AccordionDetails>
@@ -72,7 +72,7 @@ export function GrafanaAccordion({
       return keys.map((field) => {
         return (
           <li key={field}>
-            {field}: {grafanaStats[category][field]}
+            <strong>{field.toUpperCase()}</strong>: {grafanaStats[category][field]}
           </li>
         );
       });
@@ -93,7 +93,7 @@ export function GrafanaAccordion({
         <AccordionDetails>
           <div id="grafana_general">
             <div>
-              <ul>{grafanaInfoData('general')}</ul>
+              <ul style={{ listStyleType: 'none' }}>{grafanaInfoData('general')}</ul>
             </div>
           </div>
         </AccordionDetails>
@@ -109,7 +109,7 @@ export function GrafanaAccordion({
         <AccordionDetails>
           <div id="grafana_general">
             <div>
-              <ul>{grafanaInfoData('totals')}</ul>
+              <ul style={{ listStyleType: 'none' }}>{grafanaInfoData('totals')}</ul>
             </div>
           </div>
         </AccordionDetails>
@@ -125,7 +125,7 @@ export function GrafanaAccordion({
         <AccordionDetails>
           <div id="grafana_general">
             <div>
-              <ul>{grafanaInfoData('users')}</ul>
+              <ul style={{ listStyleType: 'none' }}>{grafanaInfoData('users')}</ul>
             </div>
           </div>
         </AccordionDetails>
@@ -141,7 +141,7 @@ export function GrafanaAccordion({
         <AccordionDetails>
           <div id="grafana_general">
             <div>
-              <ul>{grafanaInfoData('activity')}</ul>
+              <ul style={{ listStyleType: 'none' }}>{grafanaInfoData('activity')}</ul>
             </div>
           </div>
         </AccordionDetails>
@@ -170,7 +170,7 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
       return keys.map((field) => {
         return (
           <li key={field}>
-            {field}: {cloudfrontInfo[field]}
+            <strong>{field.toUpperCase()}</strong>: {cloudfrontInfo[field]}
           </li>
         );
       });
@@ -194,13 +194,14 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             <div id="cloudfront_info">
               <div style={{ display: 'block' }}>
                 <h3>Summary</h3>
-                <ul style={{ display: 'inline-block' }}>
+                <ul style={{ display: 'inline-block', listStyleType: 'none' }}>
                   {cloudfrontInfoData()}
                 </ul>
                 <Button
                   variant="contained"
                   href={GRAFANA_URL}
-                  style={{ display: 'inline-block', textAlign: 'center' }}
+                  target="_blank"
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', float: 'right', right: '20%', height: '80px', width: '200px' }}
                 >
                   <img
                     src="Grafana_icon.png"
