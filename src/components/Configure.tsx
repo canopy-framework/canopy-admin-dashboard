@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { deploy } from 'services/deploy';
 import { destroy } from 'services/destroy';
 import Paper from '@mui/material/Paper';
-import { TextField } from '@mui/material';
+import { TextField, Card } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
@@ -96,36 +96,36 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             <div id="deploy_destroy">
               <div>
                 <h3>Actions</h3>
-                <ul>
-                  <li>
-                    <p style={{ display: 'inline-block', textAlign: 'center' }}>
-                      Deploy Canopy pipeline:{' '}
-                    </p>
+                <div style={{ textAlign: 'center' }}>
+                  <Card style={{ display: 'inline-block', margin: '20px', padding: "40px", width: '350px', textAlign: 'center' }}>
                     <Button
                       type="submit"
                       onClick={handleDeploy}
                       value="Deploy"
                       variant="contained"
-                      style={{ display: 'inline-block', textAlign: 'center' }}
+                      style={{ display: 'block', textAlign: 'center', height: '100px', width: '100%' }}
                     >
                       Deploy
                     </Button>
-                  </li>
-                  <li>
                     <p style={{ display: 'inline-block', textAlign: 'center' }}>
-                      Destroy Canopy pipeline:{' '}
+                      Click this button to <strong>deploy</strong> your Canopy Pipeline
                     </p>
-                    <Button
+                  </Card>
+                  <Card style={{ display: 'inline-block', margin: '20px', padding: "40px", width: '350px', textAlign: 'center' }}>
+                  <Button
                       type="submit"
                       onClick={handleDestroy}
-                      value="Deploy"
+                      value="Destroy"
                       variant="contained"
-                      style={{ display: 'inline-block', textAlign: 'center' }}
+                      style={{ display: 'block', textAlign: 'center', height: '100px', width: '100%' }}
                     >
                       Destroy
                     </Button>
-                  </li>
-                </ul>
+                    <p style={{ display: 'inline-block', textAlign: 'center' }}>
+                      Click this button to <strong>destroy</strong> your Canopy Pipeline
+                    </p>
+                  </Card>
+                </div>
               </div>
             </div>
           </div>
