@@ -8,7 +8,8 @@ const Home: React.FC = () => {
           maxWidth: 936,
           height: '100%',
           margin: 'none',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          padding: '20px'
         }}
       >
         <div>

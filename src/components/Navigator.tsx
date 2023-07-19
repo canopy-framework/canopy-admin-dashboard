@@ -39,11 +39,7 @@ const categories = [
     children: [
       { id: 'Monitor', icon: <QueryStatsIcon /> },
       { id: 'Configure', icon: <SettingsIcon /> },
-      { id: 'Alerts', icon: <NotificationsIcon /> },
-      {
-        id: 'User',
-        icon: <PeopleIcon />
-      }
+      { id: 'Alerts', icon: <NotificationsIcon /> }
     ]
   }
 ];
