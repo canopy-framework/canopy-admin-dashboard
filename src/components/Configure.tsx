@@ -50,8 +50,10 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
           region,
           accessKeyId
         );
+        alert('Your configuration details were successfully submitted.');
       } catch (error) {
-        console.error('Failed to update AWS configuration ' + error);
+        alert('There was an error submitting your configuration details.');
+        console.log('Failed to update AWS configuration ' + error);
       }
     } else {
       alert('invalid http endpoint. Must match "https://"');
@@ -61,14 +63,18 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   const handleDeploy = async () => {
     try {
       await deploy();
+      alert('Your Canopy Pipeline has been successfully deployed.');
     } catch (err) {
+      alert('There was a problem while deploying your Canopy Pipeline.');
       console.error(err);
     }
   };
   const handleDestroy = async () => {
     try {
       await destroy();
+      alert('Your Canopy Pipeline has been successfully destroyed.');
     } catch (err) {
+      alert('There was a problem while destroying your Canopy Pipeline.');
       console.error(err);
     }
   };

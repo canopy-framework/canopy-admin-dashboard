@@ -1,22 +1,23 @@
 import { Router } from 'express';
 import { exec } from 'child_process';
-import fs from 'fs';
-const filePath = '../aws-config.json';
+import { promisify } from 'util';
+const execProm = promisify(exec);
 const router = Router();
 
-router.post('/setAWSInfo', (req, res) => {
+router.post('/setAWSInfo', async (req, res) => {
   const data = req.body.data;
   console.log(data);
 
-  exec(`canopy configure -an ${data.accountNumber} -dID ${data.distributionId} -ep ${data.httpEndpoint} -sk ${data.secretKey} -r ${data.region} -ak ${data.accessKeyId}`, (error, stdout, stderr) => {
-    if (error) {
-      console.log('error: ', error);
-    }
-    if (stderr) {
-      console.log('stderr: ', stderr);
-    }
+  try {
+    const { stdout } = await execProm(`
+    canopy configure -an ${data.accountNumber} -dID ${data.distributionId} -ep ${data.httpEndpoint} -sk ${data.secretKey} -r ${data.region} -ak ${data.accessKeyId}`);
     console.log('stdout: ', stdout);
-  });
+  } catch (error) {
+    console.log('error: ', error);
+    return res
+      .status(404)
+      .json({ error: 'There was an error setting the configuration details.' });
+  }
 
   res.status(204).json({ message: 'success' });
 });
