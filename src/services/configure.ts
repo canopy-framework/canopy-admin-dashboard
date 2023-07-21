@@ -5,7 +5,6 @@ const BASEURL = `http://${HOST}:${PORT}/configure`;
 export const updateConfiguration = async (
   accountNumber: string,
   distributionId: string,
-  httpEndpoint: string,
   secretKey: string,
   region: string,
   accessKeyId: string
@@ -14,7 +13,6 @@ export const updateConfiguration = async (
     data: {
       accountNumber,
       distributionId,
-      httpEndpoint,
       secretKey,
       region,
       accessKeyId,
