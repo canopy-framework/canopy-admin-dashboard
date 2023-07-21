@@ -52,7 +52,15 @@ const readAlertDescriptions = () => {
 const checkIfAlertsAlreadyActive = async (choices) => {
   const queryPath = `/api/v1/provisioning/alert-rules`;
   const query = `http://${GRAFANA_USERNAME}:${GRAFANA_PASSWORD}@${GRAFANA_HOST}:${GRAFANA_PORT}${queryPath}`;
-  const result = await axios.get(query);
+  let result;
+  try {
+    result = await axios.get(query);
+  } catch (error) {
+    console.log(
+      'There was an error fetching the active alert rules from grafana'
+    );
+    return choices;
+  }
   const existingAlertsData = result.data;
   if (Array.isArray(existingAlertsData)) {
     const existingTitles = existingAlertsData.map((datum) => {
