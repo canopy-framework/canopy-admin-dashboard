@@ -1,4 +1,4 @@
-import { getStats } from 'services/grafana';
+import { getStats, getConfig } from 'services/grafana';
 import { getClickhouseStats } from 'services/clickhouse';
 import { ClickhouseStats, GrafanaStats, CloudfrontInfo } from 'types/stats';
 import { useState, useEffect } from 'react';
@@ -14,9 +14,9 @@ import Button from '@mui/material/Button';
 
 type Category = 'general' | 'totals' | 'users' | 'activity';
 
-const GRAFANA_URL = `http://${import.meta.env.VITE_SERVER_HOST}:${
-  import.meta.env.VITE_GRAFANA_PORT
-}`;
+// const GRAFANA_URL = `http://${import.meta.env.VITE_SERVER_HOST}:${
+//   import.meta.env.VITE_GRAFANA_PORT
+// }`;
 
 export function ClickhouseAccordion({
   clickhouseStats
@@ -153,11 +153,15 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   cloudfrontInfo
 }) => {
   const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
+  const [grafanaConfig, setGrafanaConfig] = useState({});
   const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
 
   useEffect(() => {
     getStats().then((res) => {
       setGrafanaStats(res);
+    });
+    getConfig().then((res) => {
+      setGrafanaConfig(res);
     });
     getClickhouseStats().then((res) => {
       setClickhouseStats(res);
@@ -199,7 +203,7 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                 </ul>
                 <Button
                   variant="contained"
-                  href={GRAFANA_URL}
+                  href={`http://${grafanaConfig.host}:${grafanaConfig.port}`}
                   target="_blank"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', float: 'right', right: '20%', height: '80px', width: '200px' }}
                 >

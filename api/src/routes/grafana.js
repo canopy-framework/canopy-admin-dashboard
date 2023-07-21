@@ -14,6 +14,13 @@ if (!GRAFANA_PORT || !USERNAME || !PASSWORD) {
 
 const router = Router();
 
+router.get('/config', async (_, res) => {
+  return res.send({
+    host: 'localhost',
+    port: '3000'
+  });
+});
+
 router.get('/stats', async (req, res) => {
   const STATS_URL = GRAFANA_URL + '/stats';
   const USAGE_REPORT_URL = GRAFANA_URL + '/usage-report-preview';

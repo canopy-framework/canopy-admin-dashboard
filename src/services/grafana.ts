@@ -7,3 +7,8 @@ export const getStats = async () => {
   const res = await axios.get(`${BASEURL}/stats`);
   return res.data;
 };
+
+export const getConfig = async () => {
+  const res = await axios.get(`${BASEURL}/config`);
+  return res.data;
+};
