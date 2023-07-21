@@ -14,7 +14,6 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   const theme = useTheme();
   const [accountNumber, setAccountNumber] = useState<string>('');
   const [distributionId, setDistributionId] = useState<string>('');
-  const [httpEndpoint, setHttpEndpoint] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [region, setRegion] = useState<string>('');
   const [accessKeyId, setAccessKeyId] = useState<string>('');
@@ -32,31 +31,23 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
       });
     }
   };
-  function validHttpEndpoint(endpoint: string): boolean {
-    const regex = new RegExp('^https://.*');
-    return regex.test(endpoint);
-  }
+
   const handleSubmitConfigureForm = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    if (validHttpEndpoint(httpEndpoint)) {
-      try {
-        const confirm = await updateConfiguration(
-          accountNumber,
-          distributionId,
-          httpEndpoint,
-          secretKey,
-          region,
-          accessKeyId
-        );
-        alert('Your configuration details were successfully submitted.');
-      } catch (error) {
-        alert('There was an error submitting your configuration details.');
-        console.log('Failed to update AWS configuration ' + error);
-      }
-    } else {
-      alert('invalid http endpoint. Must match "https://"');
+    try {
+      const confirm = await updateConfiguration(
+        accountNumber,
+        distributionId,
+        secretKey,
+        region,
+        accessKeyId
+      );
+      alert('Your configuration details were successfully submitted.');
+    } catch (error) {
+      alert('There was an error submitting your configuration details.');
+      console.log('Failed to update AWS configuration ' + error);
     }
   };
 
@@ -179,21 +170,6 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                 event: React.ChangeEvent & { target: HTMLInputElement }
               ) => {
                 setDistributionId(event.target.value);
-              }}
-              sx={{ mt: 2 }}
-            />
-            <TextField
-              label="HTTP Endpoint (URI)"
-              name="HTTP Endpoint (URI)"
-              variant="outlined"
-              color={'primary'}
-              fullWidth
-              required
-              value={httpEndpoint}
-              onChange={(
-                event: React.ChangeEvent & { target: HTMLInputElement }
-              ) => {
-                setHttpEndpoint(event.target.value);
               }}
               sx={{ mt: 2 }}
             />
