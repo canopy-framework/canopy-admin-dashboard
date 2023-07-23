@@ -28,6 +28,33 @@ function App() {
     });
   }, []);
 
+  const allCloudfrontDistroData = () => {
+    return (
+      <div>
+        {cloudfrontInfo.map((singleDistroInfo) => {
+          return (<div>{cloudfrontInfoData(singleDistroInfo)}</div>)
+        })}
+      </div>
+    );
+  };
+
+  const cloudfrontInfoData = (singleDistroInfo) => {
+    const keys = Object.keys(singleDistroInfo);
+    if (keys.length > 0) {
+      return (
+        <ul style={{ display: 'inline-block', listStyleType: 'none' }}>
+          {keys.map((field) => {
+            return (
+              <li key={field}>
+                <strong>{field.toUpperCase()}</strong>: {singleDistroInfo[field]}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    }
+  };
+
   // return <Paperbase></Paperbase>;
   // }
   return (
@@ -40,11 +67,23 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route
               path="/configure"
-              element={<Configure cloudfrontInfo={cloudfrontInfo} />}
+              element={
+                <Configure
+                  cloudfrontInfo={cloudfrontInfo}
+                  allCloudfrontDistroData={allCloudfrontDistroData}
+                  cloudfrontInfoData={cloudfrontInfoData}
+                />
+              }
             />
             <Route
               path="/monitor"
-              element={<Monitor cloudfrontInfo={cloudfrontInfo} />}
+              element={
+                <Monitor
+                  cloudfrontInfo={cloudfrontInfo}
+                  allCloudfrontDistroData={allCloudfrontDistroData}
+                  cloudfrontInfoData={cloudfrontInfoData}
+                />
+              }
             />
             <Route path="/user_settings" element={<UserSettings />} />
             <Route path="/Alerts" element={<Alerts />} />

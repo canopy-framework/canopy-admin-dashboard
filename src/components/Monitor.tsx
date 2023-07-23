@@ -148,7 +148,7 @@ export function GrafanaAccordion({
     </div>
   );
 }
-const Monitor = ({ cloudfrontInfo: allCloudfrontDistroInfo }) => {
+const Monitor = ({ allCloudfrontDistroData }) => {
   const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
   const [grafanaConfig, setGrafanaConfig] = useState({});
   const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
@@ -164,35 +164,6 @@ const Monitor = ({ cloudfrontInfo: allCloudfrontDistroInfo }) => {
       setClickhouseStats(res);
     });
   }, []);
-
-  const allCloudfrontDistroData = () => {
-    return (
-      <div>
-        {allCloudfrontDistroInfo.map((singleDistroInfo) => {
-          return (<div>{cloudfrontInfoData(singleDistroInfo)}</div>)
-        })}
-      </div>
-    )
-  }
-
-  // cloudfrontInfo [{distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}]
-
-  const cloudfrontInfoData = (singleDistroInfo) => {
-    const keys = Object.keys(singleDistroInfo);
-    if (keys.length > 0) {
-      return (
-        <ul style={{ display: 'inline-block', listStyleType: 'none' }}>
-          {keys.map((field) => {
-            return (
-              <li key={field}>
-                <strong>{field.toUpperCase()}</strong>: {singleDistroInfo[field]}
-              </li>
-            );
-          })}
-        </ul>
-      );
-    }
-  };
 
   return (
     <div>

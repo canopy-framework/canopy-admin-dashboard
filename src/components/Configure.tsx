@@ -8,8 +8,8 @@ import { TextField, Card } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
-const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
-  cloudfrontInfo
+const Configure = ({
+  allCloudfrontDistroData
 }) => {
   const theme = useTheme();
   const [accountNumber, setAccountNumber] = useState<string>('');
@@ -17,20 +17,6 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   const [secretKey, setSecretKey] = useState<string>('');
   const [region, setRegion] = useState<string>('');
   const [accessKeyId, setAccessKeyId] = useState<string>('');
-
-  const cloudfrontInfoData = () => {
-    const keys = Object.keys(cloudfrontInfo);
-    console.log(cloudfrontInfo);
-    if (keys.length > 0) {
-      return keys.map((field) => {
-        return (
-          <li key={field}>
-            <strong>{field.toUpperCase()}</strong>: {cloudfrontInfo[field]}
-          </li>
-        );
-      });
-    }
-  };
 
   const handleSubmitConfigureForm = async (
     event: React.FormEvent<HTMLFormElement>
@@ -87,7 +73,7 @@ const Configure: React.FC<{ [key: string]: CloudfrontInfo }> = ({
             <div id="cloudfront_info">
               <div>
                 <h3>Canopy Pipeline</h3>
-                <ul style={{ listStyleType: 'none' }}>{cloudfrontInfoData()}</ul>
+                {allCloudfrontDistroData()}
               </div>
             </div>
             <div id="deploy_destroy">
