@@ -15,7 +15,8 @@ const getCloudFrontInfo = () => {
   } catch (err) {
     return { error: 'Error fetching CloudFront info ' + err };
   }
-  return info;
+  // return info;
+  return [{distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey boob'}];
 };
 
 router.get('/info', (req, res) => {

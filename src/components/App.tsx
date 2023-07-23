@@ -21,7 +21,7 @@ import {
 } from 'react-router-dom';
 
 function App() {
-  const [cloudfrontInfo, setCloudfrontInfo] = useState<CloudfrontInfo>({});
+  const [cloudfrontInfo, setCloudfrontInfo] = useState([]);
   useEffect(() => {
     getCloudfrontInfo().then((res) => {
       setCloudfrontInfo(res);

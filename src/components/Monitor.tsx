@@ -65,7 +65,6 @@ export function GrafanaAccordion({
   grafanaStats: GrafanaStats;
 }) {
   const grafanaInfoData = (category: Category) => {
-    console.log(grafanaStats);
     const dataCheck = Object.keys(grafanaStats);
     if (dataCheck.length > 0) {
       const keys = Object.keys(grafanaStats[category]);
@@ -149,9 +148,7 @@ export function GrafanaAccordion({
     </div>
   );
 }
-const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
-  cloudfrontInfo
-}) => {
+const Monitor = ({ cloudfrontInfo: allCloudfrontDistroInfo }) => {
   const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
   const [grafanaConfig, setGrafanaConfig] = useState({});
   const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
@@ -169,7 +166,6 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
   }, []);
 
   const allCloudfrontDistroData = () => {
-    const allCloudfrontDistroInfo = [{distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}];
     return (
       <div>
         {allCloudfrontDistroInfo.map((singleDistroInfo) => {
