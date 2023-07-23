@@ -168,16 +168,33 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
     });
   }, []);
 
-  const cloudfrontInfoData = () => {
-    const keys = Object.keys(cloudfrontInfo);
+  const allCloudfrontDistroData = () => {
+    const allCloudfrontDistroInfo = [{distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'falsey babe'}];
+    return (
+      <div>
+        {allCloudfrontDistroInfo.map((singleDistroInfo) => {
+          return (<div>{cloudfrontInfoData(singleDistroInfo)}</div>)
+        })}
+      </div>
+    )
+  }
+
+  // cloudfrontInfo [{distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}, {distributionId: 'sdfsd', region: 'us-east-1', deployed: 'false'}]
+
+  const cloudfrontInfoData = (singleDistroInfo) => {
+    const keys = Object.keys(singleDistroInfo);
     if (keys.length > 0) {
-      return keys.map((field) => {
-        return (
-          <li key={field}>
-            <strong>{field.toUpperCase()}</strong>: {cloudfrontInfo[field]}
-          </li>
-        );
-      });
+      return (
+        <ul style={{ display: 'inline-block', listStyleType: 'none' }}>
+          {keys.map((field) => {
+            return (
+              <li key={field}>
+                <strong>{field.toUpperCase()}</strong>: {singleDistroInfo[field]}
+              </li>
+            );
+          })}
+        </ul>
+      );
     }
   };
 
@@ -196,11 +213,14 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
         >
           <div>
             <div id="cloudfront_info">
-              <div style={{ display: 'block' }}>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gridTemplateRows: 'auto'
+                }}
+              >
                 <h3>Summary</h3>
-                <ul style={{ display: 'inline-block', listStyleType: 'none' }}>
-                  {cloudfrontInfoData()}
-                </ul>
                 <Button
                   variant="contained"
                   href={`http://${grafanaConfig.host}:${grafanaConfig.port}`}
@@ -229,6 +249,7 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                     Open Grafana
                   </Typography>
                 </Button>
+                {allCloudfrontDistroData()}
               </div>
               <div>
                 <div style={{ display: 'inline-block' }}></div>
