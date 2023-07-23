@@ -20,3 +20,7 @@ export const updateConfiguration = async (
     }
   });
 };
+
+export const addDistro = async (distributionId) => {
+  await axios.post(`${BASEURL}/addDistro`, { data: { distributionId } });
+};

@@ -65,7 +65,6 @@ export function GrafanaAccordion({
   grafanaStats: GrafanaStats;
 }) {
   const grafanaInfoData = (category: Category) => {
-    console.log(grafanaStats);
     const dataCheck = Object.keys(grafanaStats);
     if (dataCheck.length > 0) {
       const keys = Object.keys(grafanaStats[category]);
@@ -149,9 +148,7 @@ export function GrafanaAccordion({
     </div>
   );
 }
-const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
-  cloudfrontInfo
-}) => {
+const Monitor = ({ allCloudfrontDistroData }) => {
   const [grafanaStats, setGrafanaStats] = useState<GrafanaStats>({});
   const [grafanaConfig, setGrafanaConfig] = useState({});
   const [clickhouseStats, setClickhouseStats] = useState<ClickhouseStats>({});
@@ -168,19 +165,6 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
     });
   }, []);
 
-  const cloudfrontInfoData = () => {
-    const keys = Object.keys(cloudfrontInfo);
-    if (keys.length > 0) {
-      return keys.map((field) => {
-        return (
-          <li key={field}>
-            <strong>{field.toUpperCase()}</strong>: {cloudfrontInfo[field]}
-          </li>
-        );
-      });
-    }
-  };
-
   return (
     <div>
       <div>
@@ -196,16 +180,19 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
         >
           <div>
             <div id="cloudfront_info">
-              <div style={{ display: 'block' }}>
-                <h3>Summary</h3>
-                <ul style={{ display: 'inline-block', listStyleType: 'none' }}>
-                  {cloudfrontInfoData()}
-                </ul>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gridTemplateRows: 'auto'
+                }}
+              >
+                <h3 style={{justifySelf: 'center'}}>Distributions</h3>
                 <Button
                   variant="contained"
                   href={`http://${grafanaConfig.host}:${grafanaConfig.port}`}
                   target="_blank"
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', float: 'right', right: '20%', height: '80px', width: '200px' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', height: '80px', width: '100%' }}
                 >
                   <img
                     src="Grafana_icon.png"
@@ -229,6 +216,7 @@ const Monitor: React.FC<{ [key: string]: CloudfrontInfo }> = ({
                     Open Grafana
                   </Typography>
                 </Button>
+                {allCloudfrontDistroData()}
               </div>
               <div>
                 <div style={{ display: 'inline-block' }}></div>
