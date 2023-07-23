@@ -1,5 +1,5 @@
 import { CloudfrontInfo } from 'types/stats';
-import { updateConfiguration } from 'services/configure';
+import { updateConfiguration, addDistro } from 'services/configure';
 import { useEffect, useState } from 'react';
 import { deploy } from 'services/deploy';
 import { destroy } from 'services/destroy';
@@ -14,6 +14,7 @@ const Configure = ({
   const theme = useTheme();
   const [accountNumber, setAccountNumber] = useState<string>('');
   const [distributionId, setDistributionId] = useState<string>('');
+  const [newDistributionId, setNewDistributionId] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [region, setRegion] = useState<string>('');
   const [accessKeyId, setAccessKeyId] = useState<string>('');
@@ -55,6 +56,24 @@ const Configure = ({
       console.error(err);
     }
   };
+  const handleAddDistro = async (event) => {
+    event.preventDefault();
+    try {
+      await addDistro(newDistributionId);
+      alert('Your new distribution has been added to your Canopy Pipeline.');
+    } catch (err) {
+      alert('There was a problem while adding the new distribution to your Canopy Pipeline.');
+      console.error(err);
+    }
+  };
+  const cardStyle = {
+    display: 'inline-block',
+    margin: '10px',
+    padding: '20px',
+    height: '270px',
+    width: '250px',
+    textAlign: 'center'
+  };
 
   return (
     <div>
@@ -80,7 +99,7 @@ const Configure = ({
               <div>
                 <h3>Actions</h3>
                 <div style={{ textAlign: 'center' }}>
-                  <Card style={{ display: 'inline-block', margin: '20px', padding: "40px", width: '350px', textAlign: 'center' }}>
+                  <Card style={cardStyle}>
                     <Button
                       type="submit"
                       onClick={handleDeploy}
@@ -94,7 +113,7 @@ const Configure = ({
                       Click this button to <strong>deploy</strong> your Canopy Pipeline
                     </p>
                   </Card>
-                  <Card style={{ display: 'inline-block', margin: '20px', padding: "40px", width: '350px', textAlign: 'center' }}>
+                  <Card style={cardStyle}>
                   <Button
                       type="submit"
                       onClick={handleDestroy}
@@ -106,6 +125,41 @@ const Configure = ({
                     </Button>
                     <p style={{ display: 'inline-block', textAlign: 'center' }}>
                       Click this button to <strong>destroy</strong> your Canopy Pipeline
+                    </p>
+                  </Card>
+                  <Card style={cardStyle}>
+                    <form
+                      noValidate
+                      autoComplete="off"
+                      style={{ padding: '10px' }}
+                      onSubmit={handleAddDistro}
+                    >
+                      <TextField
+                        label="New Distribution ID:"
+                        name="New Distribution ID"
+                        variant="outlined"
+                        color={'primary'}
+                        fullWidth
+                        required
+                        value={newDistributionId}
+                        onChange={(
+                          event: React.ChangeEvent & { target: HTMLInputElement }
+                        ) => {
+                          setNewDistributionId(event.target.value);
+                        }}
+                        sx={{ mt: 2, padding: '5px' }}
+                      />
+                      <Button
+                        type="submit"
+                        value="newDistributionId"
+                        variant="contained"
+                        style={{ display: 'block', textAlign: 'center', height: '50px', width: '100%' }}
+                      >
+                        Add New Distribution
+                      </Button>
+                    </form>
+                    <p style={{ display: 'inline-block', textAlign: 'center' }}>
+                        Click this button to <strong>add</strong> a new distribution to your Canopy Pipeline
                     </p>
                   </Card>
                 </div>
