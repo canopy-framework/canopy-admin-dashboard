@@ -38,6 +38,12 @@ function App() {
     );
   };
 
+  const fieldTransformation = {
+    distributionId: 'Distribution ID',
+    region: 'Region',
+    deployed: 'Deployed'
+  }
+
   const cloudfrontInfoData = (singleDistroInfo) => {
     const keys = Object.keys(singleDistroInfo);
     if (keys.length > 0) {
@@ -46,7 +52,7 @@ function App() {
           {keys.map((field) => {
             return (
               <li key={field}>
-                <strong>{field.toUpperCase()}</strong>: {singleDistroInfo[field]}
+                <strong>{fieldTransformation[field]}</strong>: {singleDistroInfo[field]}
               </li>
             );
           })}

@@ -187,12 +187,12 @@ const Monitor = ({ allCloudfrontDistroData }) => {
                   gridTemplateRows: 'auto'
                 }}
               >
-                <h3>Summary</h3>
+                <h3 style={{justifySelf: 'center'}}>Distributions</h3>
                 <Button
                   variant="contained"
                   href={`http://${grafanaConfig.host}:${grafanaConfig.port}`}
                   target="_blank"
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', float: 'right', right: '20%', height: '80px', width: '200px' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', height: '80px', width: '100%' }}
                 >
                   <img
                     src="Grafana_icon.png"
