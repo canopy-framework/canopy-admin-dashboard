@@ -131,7 +131,7 @@ const Configure = ({
                     <form
                       noValidate
                       autoComplete="off"
-                      style={{ padding: '10px' }}
+                      style={{ }}
                       onSubmit={handleAddDistro}
                     >
                       <TextField
@@ -147,13 +147,13 @@ const Configure = ({
                         ) => {
                           setNewDistributionId(event.target.value);
                         }}
-                        sx={{ mt: 2, padding: '5px' }}
+                        sx={{ height: '50px', marginBottom: '5px' }}
                       />
                       <Button
                         type="submit"
                         value="newDistributionId"
                         variant="contained"
-                        style={{ display: 'block', textAlign: 'center', height: '50px', width: '100%' }}
+                        style={{ display: 'block', textAlign: 'center', height: '40px', width: '100%', marginTop: '5px' }}
                       >
                         Add New Distribution
                       </Button>
